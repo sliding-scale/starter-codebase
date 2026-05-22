@@ -2,43 +2,39 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 
 import "../index.css";
+import { APP_NAME } from "@my-better-t-app/ui/lib/brand";
 import { Geist, Geist_Mono } from "next/font/google";
-
-import Header from "@/components/header";
 import Providers from "@/components/providers";
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+	variable: "--font-geist-sans",
+	subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+	variable: "--font-geist-mono",
+	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "my-better-t-app",
-  description: "my-better-t-app",
+	title: APP_NAME,
+	description: APP_NAME,
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ClerkProvider>
-          <Providers>
-            <div className="grid grid-rows-[auto_1fr] h-svh">
-              <Header />
-              {children}
-            </div>
-          </Providers>
-        </ClerkProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en" suppressHydrationWarning>
+			<body
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+			>
+				<ClerkProvider>
+					<Providers>{children}</Providers>
+				</ClerkProvider>
+			</body>
+		</html>
+	);
 }

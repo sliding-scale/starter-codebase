@@ -1,0 +1,52 @@
+---
+description: Required UX patterns for every screen
+globs: apps/**/*.{tsx,ts}
+alwaysApply: false
+---
+
+# UX patterns
+
+Every screen / feature must satisfy the checklist below. If something doesn't apply, leave a one-line comment saying why.
+
+## Responsive
+
+- Mobile-first. Build at 375px then scale up with `sm: md: lg:` breakpoints.
+- Full-height containers use `min-h-svh` / `h-svh` (not `vh`) so mobile browser chrome doesn't clip content.
+- Test at 375px, 768px, 1280px before claiming done.
+
+## Loading & data states
+
+- **Skeleton loaders** for any data fetch — use shadcn `<Skeleton />`, shape it to match the final layout. No bare spinners on first paint.
+- **Loading states** on buttons/forms during async work: disabled + spinner + text change (e.g. "Saving...").
+- **Empty states**: icon + heading + short description + primary CTA. Never render a bare empty list.
+- **Error states**: friendly message + retry action; surface `ConvexError.data.message` when present.
+
+## Mutations
+
+- Use **optimistic updates** for any mutation where the new state is predictable (toggles, likes, reorder, delete, inline edits). Convex: `useMutation(...).withOptimisticUpdate(...)`.
+- Confirm success / failure with a **Sonner toast** (`import { toast } from "sonner"`): `toast.success`, `toast.error`, or `toast.promise` for in-flight work. No `alert()`, no custom toast.
+
+## Interaction
+
+- **Hover states** on every clickable element (covered in `ui-styling.mdc`).
+- **Command palette (⌘K / Ctrl+K)** wired globally — use shadcn `<Command />` + `<CommandDialog />`. Register a keyboard listener at the app shell level.
+- **Modals / sidebars** animate open and close (Radix / shadcn primitives already do this — don't disable it). Add `motion/react` for any custom overlay.
+
+## Navigation
+
+- Use **view transitions** between routes (`unstable_ViewTransition` from React / Next `<Link>` view-transition support, or `motion/react` `AnimatePresence` for client-side route changes). Hard cuts are not acceptable.
+
+## Checklist (paste at top of new feature PRs)
+
+- [ ] mobile responsive (375 / 768 / 1280)
+- [ ] `svh` for full-height
+- [ ] skeleton loader
+- [ ] loading state on actions
+- [ ] empty state
+- [ ] error state
+- [ ] optimistic update (if applicable)
+- [ ] sonner toast on success/failure
+- [ ] hover + active + focus on all interactive elements
+- [ ] modal/sidebar animations intact
+- [ ] view transition on navigation
+- [ ] ⌘K entries added if feature exposes navigable actions

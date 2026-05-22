@@ -1,0 +1,28 @@
+---
+description: Use Zod + react-hook-form for all app forms
+alwaysApply: false
+---
+# Forms: Zod + react-hook-form
+
+When adding or editing a form in `apps/web`, use **react-hook-form** with **Zod** validation via `@hookform/resolvers/zod`.
+
+## Required stack
+
+- `react-hook-form` — `useForm`, `register` / `Controller`, `handleSubmit`
+- `zod` — schema in `src/lib/**/schemas.ts` (or colocated `*.schema.ts` next to the feature)
+- `@hookform/resolvers/zod` — `zodResolver(schema)`
+
+
+## Rules
+
+- Do **not** use raw `useState` per field for new forms; use RHF + Zod.
+- Put reusable Zod schemas in `lib/` (e.g. `lib/auth/schemas.ts`); export `z.infer` types.
+- Show field errors from `form.formState.errors`; use `AuthFieldError` or equivalent.
+- Set `aria-invalid` on inputs when the field has an error.
+- Server/API failures: `form.setError("root", { message: "..." })` or a dedicated `formError` only for non-field errors.
+- Multi-step flows: separate `useForm` instances per step (each with its own schema).
+- Prefer `handleSubmit` over manual `preventDefault` + hand-rolled validation.
+
+## Dependencies
+
+Add to `apps/web/package.json` if missing: `react-hook-form`, `@hookform/resolvers`, `zod` (catalog).

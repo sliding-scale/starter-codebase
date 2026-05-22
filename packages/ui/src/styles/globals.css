@@ -22,6 +22,9 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.58 0.22 27);
+  --success: oklch(0.66 0.17 152);
+  --warning: oklch(0.78 0.16 75);
+  --info: oklch(0.62 0.18 244);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -57,6 +60,9 @@
   --accent: oklch(0.371 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
+  --success: oklch(0.72 0.17 152);
+  --warning: oklch(0.82 0.16 75);
+  --info: oklch(0.68 0.18 244);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -94,6 +100,9 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -126,5 +135,57 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+@keyframes status-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+@keyframes status-scan {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(120%);
+  }
+}
+
+@keyframes status-glitch {
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-2px, 1px);
+  }
+  40% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(2px, -1px);
+  }
+  60% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(-1px, 2px);
+  }
+  80% {
+    clip-path: inset(10% 0 70% 0);
+    transform: translate(1px, -2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-float,
+  .status-scan,
+  .status-glitch {
+    /* biome-ignore lint/complexity/noImportantStyles: a11y override beats Tailwind's arbitrary-value animation utilities */
+    animation: none !important;
   }
 }
